@@ -2,8 +2,6 @@ import usersModel from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const SECRET="asdfoahfasdfjasdfjasdlfjklasd53452345234523hdsfhklsdaf";
-
 export const userRegister = async(req,res)=>{
     const {email,password} = req.body;
     try{
@@ -38,7 +36,7 @@ export const userLogin = async(req,res)=>{
             return res.json({ message: "Invalid credentials" });
         }
         user.password = undefined;
-        const token = jwt.sign({id:user._id,email:user.email},SECRET);
+        const token = jwt.sign({id:user._id,email:user.email},process.env.SECRET);
         res.status(200).json({token:token,result:user});
     }catch (error) {
         console.log(error);
